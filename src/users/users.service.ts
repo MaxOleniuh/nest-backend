@@ -32,8 +32,9 @@ export class UsersService {
       where: { email },
       include: { all: true },
     });
-    if (!user) return null;
 
-    return user;
+    if (user) {
+      return user.get({ plain: true });
+    }
   }
 }

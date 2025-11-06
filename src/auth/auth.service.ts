@@ -35,7 +35,11 @@ export class AuthService {
   }
 
   async generateToken(user: User) {
-    const payload = { email: user.email, id: user.id, roles: user.roles };
+    const payload = {
+      id: user.id,
+      email: user?.dataValues?.email ? user.dataValues.email : user.email,
+      roles: user?.dataValues?.roles ? user.dataValues.roles : user.roles,
+    };
     return {
       token: this.jwtService.sign(payload),
     };
@@ -56,7 +60,7 @@ export class AuthService {
       user.password
     );
 
-    if (passwordEquals) {
+    if (user && passwordEquals) {
       return user;
     }
 
