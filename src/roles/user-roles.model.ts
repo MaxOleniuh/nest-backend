@@ -1,5 +1,4 @@
 import {
-  BelongsToMany,
   Column,
   DataType,
   ForeignKey,
@@ -26,7 +25,6 @@ export class UserRoles extends Model<UserRoles> {
   @ForeignKey(() => Role)
   @Column({
     type: DataType.INTEGER,
-    unique: true,
     allowNull: false,
   })
   roleId: number;
@@ -34,7 +32,6 @@ export class UserRoles extends Model<UserRoles> {
   @ForeignKey(() => User)
   @Column({
     type: DataType.INTEGER,
-    unique: true,
     allowNull: false,
   })
   userId: number;
