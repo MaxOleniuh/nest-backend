@@ -29,22 +29,22 @@ export class User extends Model<User, UserCreationAttrs> {
     unique: true,
     allowNull: false,
   })
-  email!: string;
+  declare email: string;
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  password!: string;
+  declare password: string;
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: false,
   })
-  banned!: boolean;
+  declare banned: boolean;
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
-  banReason?: string;
+  declare banReason?: string;
 
   @BelongsToMany(() => Role, () => UserRoles)
   roles?: Role[];
