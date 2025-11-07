@@ -10,11 +10,19 @@ import { AuthController } from "./auth/auth.controller";
 import { AuthService } from "./auth/auth.service";
 import { AuthModule } from "./auth/auth.module";
 import { JwtModule } from "@nestjs/jwt";
+import { PostsModule } from "./posts/posts.module";
+import { Post } from "./posts/posts.model";
+import { FilesModule } from "./files/files.module";
+import { ServeStaticModule } from "@nestjs/serve-static";
+import path from "path";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: path.resolve(__dirname, "static"),
     }),
     SequelizeModule.forRoot({
       dialect: "postgres",
@@ -25,7 +33,7 @@ import { JwtModule } from "@nestjs/jwt";
       database: process.env.POSTGRES_DB,
       autoLoadModels: true,
       synchronize: true,
-      models: [User, Role, UserRoles],
+      models: [User, Role, UserRoles, Post],
     }),
     UsersModule,
     RolesModule,
@@ -34,6 +42,8 @@ import { JwtModule } from "@nestjs/jwt";
       secret: process.env.PRIVATE_KEY || "SECRET_KEY",
       signOptions: { expiresIn: "24h" },
     }),
+    PostsModule,
+    FilesModule,
   ],
   controllers: [AuthController],
   providers: [AuthService],
