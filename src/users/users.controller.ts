@@ -1,4 +1,12 @@
-import { Body, Controller, Post, Get, UseGuards } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from "@nestjs/common";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { UsersService } from "./users.service";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
@@ -11,6 +19,7 @@ import { BanUserDto } from "./dto/ban-user.dto";
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  @UsePipes(ValidationPipe)
   @Post()
   createUser(@Body() userDto: CreateUserDto) {
     return this.usersService.createUser(userDto);
